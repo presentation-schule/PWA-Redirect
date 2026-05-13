@@ -33,10 +33,17 @@
     <p>Im Browser wird nicht weitergeleitet.</p>
   </main>
 
-  <script>
-    // Zielseite ist bewusst fest im Quellcode hinterlegt:
-    const TARGET_URL = "https://example.com";
+<script>
+const TARGET_URL = "https://example.com";
 
+const isIOSPWA =
+  window.navigator.standalone === true ||
+  window.matchMedia("(display-mode: standalone)").matches;
+
+if (isIOSPWA) {
+  // Öffnet die Zielseite im selben PWA-Fenster
+  window.location.replace(TARGET_URL);
+}
     function isIOS() {
       // iPadOS kann sich als Mac ausgeben; maxTouchPoints erkennt iPadOS zuverlässig genug.
       return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
